@@ -5,7 +5,6 @@ package uebungen;
  */
 public class BinarySearch
 {
-
 	public static boolean binarySearchRecursive(int[] sorted, int candidate)
 	{
 		return binarySearchRecursive(sorted, candidate, 0, sorted.length);
@@ -15,7 +14,7 @@ public class BinarySearch
 		if(from == to)
 			return sorted[from] == candidate;
 		
-		int middleIndex = from + to/2;
+		int middleIndex = from + (to - from)/2;
 		
 		if(sorted[middleIndex] == candidate)
 			return true;
