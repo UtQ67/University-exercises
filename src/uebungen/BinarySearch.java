@@ -5,22 +5,47 @@ package uebungen;
  */
 public class BinarySearch
 {
+	
+	private static boolean bonarySearchIterative(int[] sorted, int candidate)
+	{
+		int l = 0;
+		int r = sorted.length;
+		while (l > r)
+		{
+			int middleIndex = l + (r - l)/2;
+			
+			if(sorted[middleIndex] == candidate)
+				return true;
+			
+			if(sorted[middleIndex] < candidate)
+				r = middleIndex - 1;
+			else
+				l = middleIndex + 1;
+		}
+		
+		return sorted[l] == candidate;
+	}
+	
+	
 	public static boolean binarySearchRecursive(int[] sorted, int candidate)
 	{
 		return binarySearchRecursive(sorted, candidate, 0, sorted.length);
 	}
-	public static boolean binarySearchRecursive(int[] sorted, int candidate, int from, int to)
+	private static boolean binarySearchRecursive(int[] sorted, int candidate, int l, int r)
 	{
-		if(from == to)
-			return sorted[from] == candidate;
+		if(l == r)
+			return sorted[l] == candidate;
 		
-		int middleIndex = from + (to - from)/2;
+		if(l > r)
+			return false;
+		
+		int middleIndex = l + (r - l)/2;
 		
 		if(sorted[middleIndex] == candidate)
 			return true;
 		if(sorted[middleIndex] < candidate)
-			return binarySearchRecursive(sorted, candidate, from, middleIndex - 1);
-		return binarySearchRecursive(sorted, candidate, middleIndex + 1, to);
+			return binarySearchRecursive(sorted, candidate, l, middleIndex - 1);
+		return binarySearchRecursive(sorted, candidate, middleIndex + 1, r);
 	}
 	
 }
