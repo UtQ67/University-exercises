@@ -78,4 +78,11 @@ public class Testat22
             return arr1[i] == arr2[i];
         return arr[i] == arr2[i] && contentCheck(arr1, arr2, i-1);
     }
+    public static boolean isPalindrome(char[] arr, int i)
+    {
+        if(i == arr.length/2)
+            return arr[i] == arr[arr.length - i - 1];
+        return arr[i] == arr[arr.length - 1 - i] && isPalindrome(arr, i++);
+    }
+    
 }
