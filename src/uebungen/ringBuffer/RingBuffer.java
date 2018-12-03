@@ -26,7 +26,7 @@ public class RingBuffer
         last.student = s;
         n++;
         if(first == null)
-            first = s;
+            first = last;
         else
             oldLast.next = last;
     }
