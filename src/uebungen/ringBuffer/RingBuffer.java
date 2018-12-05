@@ -37,12 +37,12 @@ public class RingBuffer
     }
     public Student pop()
     {
-        if(first == null) return new NoSuchElementException("Queue empty");
+        if(first == null) throw new NoSuchElementException("Queue empty");
 
         Element el = first;
         first = first.next;
         n--;
-        return rl.student;
+        return el.student;
     }
     public int size()
     {
