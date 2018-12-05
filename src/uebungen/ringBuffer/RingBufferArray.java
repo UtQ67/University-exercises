@@ -5,7 +5,8 @@ import uebungen.Student;
 public class RingBufferArray
 {
 	private Student[] ringBuffer;
-	private int pos = 0;
+	private int head = 0;
+	private int tail = 0;
 	
 	public RingBufferArray(int limit)
 	{
@@ -14,20 +15,22 @@ public class RingBufferArray
 	
 	public void push(Student s)
 	{
-		if(pos%ringBuffer.length + 1 == ringBuffer.length) throw new  RuntimeException("Queue limit reached");
+		if(tail + 1== head) throw new  RuntimeException("Queue limit reached");
 		
-		ringBuffer[pos%ringBuffer.length] = s;
+		ringBuffer[tail + 1%ringBuffer.length] = s;
+		tail++;
 	}
 	
 	public Student pop()
 	{
-		Student ret = ringBuffer[pos % ringBuffer.length];
-		ringBuffer[pos % ringBuffer.length]=null;
+		Student ret = ringBuffer[head % ringBuffer.length];
+		ringBuffer[head % ringBuffer.length]=null;
+		head++;
 		return ret;
 	}
 	public Student peek()
 	{
-		return ringBuffer[pos%ringBuffer.length];
+		return ringBuffer[head%ringBuffer.length];
 	}
 	public int size()
 	{
@@ -35,6 +38,6 @@ public class RingBufferArray
 	}
 	public int countElements()
 	{
-		return pos%ringBuffer.length;
+		return  tail%ringBuffer.length - head % ringBuffer.length;
 	}
 }
