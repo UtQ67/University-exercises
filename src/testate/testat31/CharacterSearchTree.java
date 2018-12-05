@@ -1,3 +1,5 @@
+package testate.testat31;
+
 import javax.lang.model.util.ElementScanner6;
 
 public class CharacterSearchTree

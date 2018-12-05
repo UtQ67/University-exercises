@@ -1,3 +1,5 @@
+package testate.testat31;
+
 public class HuffmanCoding
 { 
     private HuffmanTree[] trees;
