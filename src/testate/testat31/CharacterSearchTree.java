@@ -193,7 +193,7 @@ public class CharacterSearchTree
     {
         if(!isEmpty())
         {
-            if(isEmpty())
+            if(isLeaf())
                 System.out.print("*");
             System.out.println(content.toString());
             leftChild.showPreOrder();
