@@ -222,5 +222,96 @@ public class CharacterSearchTree
             index = rightChild.toArray( collector, index + 1 );
         }
         return index;
-    }  
+    }
+    
+    public HuffmanTriple minimum()
+    {
+        if(isEmpty())
+            return null;
+        
+        CharacterSearchTree current = this;
+        while(current.leftChild != null)
+        {
+            current = current.leftChild;
+        }
+        return current.getContent();
+        
+    }
+    
+    public boolean hasOnlyCompleteNodes()
+    {
+        if(isLeaf())
+            return true;
+        
+        return leftChild.hasOnlyCompleteNodes() && rightChild.hasOnlyCompleteNodes();
+    }
+    public boolean containsCharacter(char t)
+    {
+        if(isLeaf())
+            return getContent().getToken() == t;
+        if(!isEmpty())
+        {
+            if (getContent().getToken() == t)
+                return true;
+        }
+        return leftChild.containsCharacter(t) || rightChild.containsCharacter(t);
+    }
+    public boolean equalStructure(CharacterSearchTree cst)
+    {
+        if(isLeaf() && cst.isLeaf())
+            return true;
+        return rightChild.equalStructure(cst.rightChild) && leftChild.equalStructure(cst.leftChild);
+    }
+    public CharacterSearchTree rotateNodeToRight()
+    {
+        CharacterSearchTree nodeToRotate = leftChild;
+        leftChild = null;
+    
+        nodeToRotate.addRotate(this);
+        return nodeToRotate;
+    }
+    public void addRotate(CharacterSearchTree cst)
+    {
+        char token = cst.getContent().getToken();
+        
+        if(isEmpty())
+        {
+            content = cst.content;
+            rightChild = cst.rightChild;
+            leftChild = cst.leftChild;
+        }
+        else
+        {
+            if (token < content.getToken())
+                leftChild.addRotate(cst);
+            else if (token > content.getToken())
+                rightChild.addRotate(cst);
+        }
+    }
+    public boolean samePath(char t1, char t2)
+    {
+        CharacterSearchTree current = this;
+    
+        while(!current.isEmpty() && current.getContent().getToken() != t1)
+        {
+            if(t1 < current.getContent().getToken())
+                current = leftChild;
+            else
+                current = rightChild;
+        }
+        if(isEmpty())
+            return false;
+    
+        while(!current.isEmpty() && current.getContent().getToken() != t2)
+        {
+            if(t2 < current.getContent().getToken())
+                current = leftChild;
+            else
+                current = rightChild;
+        }
+        if(isEmpty())
+            return false;
+        return true;
+    }
+
 }

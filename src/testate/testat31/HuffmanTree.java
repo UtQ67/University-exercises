@@ -12,7 +12,7 @@ public class HuffmanTree
         leftChild = null;
         rightChild = null;
     }
-
+    
     // single node tree 
     public HuffmanTree( HuffmanTriple t ) 
     {
@@ -87,5 +87,6 @@ public class HuffmanTree
             }
         }
     }
+    
 
 }
