@@ -230,18 +230,19 @@ public class CharacterSearchTree
             return null;
         
         CharacterSearchTree current = this;
-        while(current.leftChild != null)
+        while(!current.leftChild.isEmpty())
         {
             current = current.leftChild;
         }
         return current.getContent();
-        
     }
     
     public boolean hasOnlyCompleteNodes()
     {
         if(isLeaf())
             return true;
+        if(leftChild.isEmpty() != rightChild.isEmpty())
+            return false;
         
         return leftChild.hasOnlyCompleteNodes() && rightChild.hasOnlyCompleteNodes();
     }
@@ -258,8 +259,8 @@ public class CharacterSearchTree
     }
     public boolean equalStructure(CharacterSearchTree cst)
     {
-        if(isLeaf() && cst.isLeaf())
-            return true;
+        if(isLeaf() || cst.isLeaf())
+            return isLeaf() == cst.isLeaf();
         return rightChild.equalStructure(cst.rightChild) && leftChild.equalStructure(cst.leftChild);
     }
     public CharacterSearchTree rotateNodeToRight()
@@ -295,9 +296,9 @@ public class CharacterSearchTree
         while(!current.isEmpty() && current.getContent().getToken() != t1)
         {
             if(t1 < current.getContent().getToken())
-                current = leftChild;
+                current = current.leftChild;
             else
-                current = rightChild;
+                current = current.rightChild;
         }
         if(isEmpty())
             return false;
@@ -311,6 +312,7 @@ public class CharacterSearchTree
         }
         if(isEmpty())
             return false;
+        
         return true;
     }
 
