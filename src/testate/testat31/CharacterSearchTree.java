@@ -3,7 +3,7 @@ package testate.testat31;
 import javax.lang.model.util.ElementScanner6;
 
 public class CharacterSearchTree
-{ 
+{
     private HuffmanTriple content;
     private CharacterSearchTree leftChild, rightChild;
 
@@ -230,7 +230,7 @@ public class CharacterSearchTree
             return null;
         
         CharacterSearchTree current = this;
-        while(!current.leftChild.isEmpty())
+        while(!current.isLeaf())
         {
             current = current.leftChild;
         }
@@ -259,6 +259,8 @@ public class CharacterSearchTree
     }
     public boolean equalStructure(CharacterSearchTree cst)
     {
+    	if(isEmpty())
+    		return cst.isEmpty();
         if(isLeaf() || cst.isLeaf())
             return isLeaf() == cst.isLeaf();
         return rightChild.equalStructure(cst.rightChild) && leftChild.equalStructure(cst.leftChild);
