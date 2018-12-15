@@ -1,6 +1,6 @@
 package uebungen.ringBuffer;
 
-import uebungen.Student;
+import dataStructurs.basic.Student;
 
 public class RingBufferArray
 {

@@ -2,7 +2,7 @@ package uebungen.ringBuffer;
 
 import java.util.NoSuchElementException;
 
-import uebungen.Student;
+import dataStructurs.basic.Student;
 
 public class RingBuffer
 {

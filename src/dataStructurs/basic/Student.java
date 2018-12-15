@@ -1,4 +1,4 @@
-package uebungen;
+package dataStructurs.basic;
 
 public class Student
 {

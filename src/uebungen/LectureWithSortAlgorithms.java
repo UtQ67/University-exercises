@@ -1,5 +1,7 @@
 package uebungen;
 
+import dataStructurs.basic.Student;
+
 public class LectureWithSortAlgorithms
 {
 	private String title;
