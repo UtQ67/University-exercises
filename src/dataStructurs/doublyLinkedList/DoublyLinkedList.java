@@ -1,7 +1,9 @@
 package dataStructurs.doublyLinkedList;
 
 
-public class DoublyLinkedList<T>
+import javax.swing.text.AbstractDocument;
+
+public class DoublyLinkedList<T extends Comparable<T>>
 {
     private Element first, last;
     private int size;
@@ -29,7 +31,38 @@ public class DoublyLinkedList<T>
     
     private Element quicksortHelp(Element l, Element r)
     {
-        throw new RuntimeException();
+        Element pivot = r;
+        Element current = l;
+        
+        if(l != r)
+        {
+            while (current != pivot)
+            {
+                if(current.getContent().compareTo(pivot.getContent()) > 0)
+                {
+                    Element oldCurrent = current;
+                    current = current.succ;
+                    
+                    
+                    if(oldCurrent.equals(first))
+                    {
+                        removeFirst();
+                        add(oldCurrent.content);
+                    }
+                    else
+                    {
+                        Element succCurrent = oldCurrent.succ;
+                        Element predCurrent = oldCurrent.pred;
+    
+                        remove(oldCurrent);
+                        predCurrent.connectAsSucc(succCurrent);
+                        add(oldCurrent.content);
+                    }
+                }
+            }
+        }
+        
+        return pivot;
     }
     ///////////////////////////
     public int size()
