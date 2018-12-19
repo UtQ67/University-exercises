@@ -1,5 +1,7 @@
 package testate.testat32;
 
+import java.util.zip.DeflaterOutputStream;
+
 public class DoublyLinkedList
 {
     private Element first, last;
@@ -12,9 +14,21 @@ public class DoublyLinkedList
     }
 
     ///////////////////////
+    public DoublyLinkedList(DoublyLinkedList dll)
+    {
+        Element current = dll.first;
+        
+        while (current != null)
+        {
+            add(current.getContent());
+            current = current.getSucc();
+        }
+    }
+    
     public void clear()
     {
         first = last = null;
+        size = 0;
     }
     
     public Object getLast()
@@ -71,19 +85,28 @@ public class DoublyLinkedList
     
     public void insert(int n, Object o)
     {
-        if(size < n) throw new IndexOutOfBoundsException();
-        
-        Element indexN = first;
-        for (int i = 0; i <= n; i++)
+        if (size < n) throw new IndexOutOfBoundsException();
+        if(n == 0)
         {
-            indexN = indexN.getSucc();
+            first.connectAsPred(new Element(o));
+            first = first.getPred();
+        }else if(n == size-1)
+        {
+            last.connectAsSucc(new Element(o));
+            last = last.getSucc();
+        }else
+        {
+            Element indexN = first;
+            for (int i = 0; i < n; i++)
+            {
+                indexN = indexN.getSucc();
+            }
+    
+            Element indexNSucc = indexN.getSucc();
+            indexN.disconnectSucc();
+            indexN.connectAsPred(new Element(o));
+            indexN.getSucc().connectAsSucc(indexNSucc);
         }
-        
-        Element indexNSucc = indexN.getSucc();
-        indexN.disconnectSucc();
-        indexN.connectAsPred(new Element(o));
-        indexN.getSucc().connectAsSucc(indexNSucc);
-        
         size++;
     }
     
@@ -110,7 +133,7 @@ public class DoublyLinkedList
         
         for(Element current = last; current != null; current = current.getPred())
         {
-            flipped.add(current);
+            flipped.add(current.getContent());
         }
         return flipped;
     }
@@ -137,6 +160,72 @@ public class DoublyLinkedList
         pred.connectAsSucc(succ);
         
         size--;
+    }
+    
+    public void concat(DoublyLinkedList dll)
+    {
+        last.connectAsSucc(dll.first);
+        this.size += dll.size();
+        last = dll.last;
+        dll.clear();
+    }
+    
+    public DoublyLinkedList subList(int from, int to)
+    {
+        Element current = first;
+        for (int i = 0; i < from; i++)
+        {
+            current = current.getSucc();
+        }
+    
+        DoublyLinkedList subList = new DoublyLinkedList();
+        for (int i = 0; i < to; i++)
+        {
+            subList.add(current.getContent());
+            current = current.getSucc();
+        }
+        return subList;
+    }
+    public void removeAll(DoublyLinkedList dll)
+    {
+        for(Element current = first; current != null;)
+        {
+            boolean deleted= false;
+            for(Element currentDll = dll.first; currentDll != null; currentDll = currentDll.getSucc())
+            {
+                if(current.getContent().equals(currentDll.getContent()))
+                {
+                    deleted = true;
+                    Element pred = current.getPred();
+                    current = current.getSucc();
+                    
+                    pred.disconnectSucc();
+                    current.disconnectPred();
+                    
+                    pred.connectAsSucc(current);
+                }
+            }
+            if(!deleted)
+                current = current.getSucc();
+        }
+    }
+    public void pack()
+    {
+        Element current = first;
+        
+        while(current != null && current.getSucc() != null)
+        {
+            if(current.getContent().equals(current.getSucc().getContent()))
+            {
+                Element newSucc = current.getSucc().getSucc();
+                
+                current.disconnectSucc();
+                current.connectAsSucc(newSucc);
+            }else
+            {
+                current = current.getSucc();
+            }
+        }
     }
     //////////////////////////
     public int size()
